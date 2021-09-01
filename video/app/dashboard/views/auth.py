@@ -52,4 +52,16 @@ class Admin(View):
     TEMPLATE = 'dashboard/auth/admin.html'
 
     def get(self, request):
-        return render_to_response(request, self.TEMPLATE)
+        # users = User.objects.filter(is_superuser=True)
+        users = User.objects.all()
+        data = {'users': users}
+        return render_to_response(request, self.TEMPLATE, data=data)
+
+class UpdateAdminStatus(View):
+    def get(self, request):
+        status = request.GET.get('status', 'on')
+        _status = True if status == 'on' else False
+        request.user.is_superuser = _status
+        request.user.save()
+
+        return redirect(reverse('admin_manger'))

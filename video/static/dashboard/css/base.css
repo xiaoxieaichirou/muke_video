@@ -25,6 +25,10 @@ html, body {
     padding-left: 0;
 }
 
+h1 {
+    margin: 5%;
+}
+
 .side-menu > li {
     text-align: center;
     width: 100%;

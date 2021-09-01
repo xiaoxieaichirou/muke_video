@@ -2,9 +2,10 @@
 
 from django.views.generic import View
 from django.shortcuts import redirect, reverse
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.models import User
 from app.libs.base_render import render_to_response
+
 
 class Login(View):
     TEMPLATE = 'dashboard/auth/login.html'
@@ -38,3 +39,17 @@ class Login(View):
 
         login(request, user)
         return redirect(reverse('dashboard_index'))
+
+
+class Logout(View):
+
+    def get(self, request):
+        logout(request)
+        return redirect(reverse('login'))
+
+
+class Admin(View):
+    TEMPLATE = 'dashboard/auth/admin.html'
+
+    def get(self, request):
+        return render_to_response(request, self.TEMPLATE)

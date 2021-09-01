@@ -6,7 +6,7 @@
     <link href="/static/dashboard/css/login.css" rel="stylesheet"/>
 </head>
 <body>
-<form class="form-horizontal edit-area" action="/dashboard/login" method="post">
+<form class="form-horizontal edit-area" action="/dashboard/login" method="POST">${csrf_token}
   <div class="form-group">
     <input type="text" name="username" class="form-control" placeholder="用户名">
   </div>

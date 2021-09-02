@@ -6,6 +6,7 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.models import User
 from django.core.paginator import Paginator
 from app.libs.base_render import render_to_response
+from app.utils.permission import  dashboard_auth
 
 
 class Login(View):
@@ -14,12 +15,17 @@ class Login(View):
     def get(self, request):
         if request.user.is_authenticated:
             return redirect(reverse('dashboard_index'))
-        data = {'error': ''}
+
+        to = request.GET.get('to', '')
+
+        data = {'error': '', 'to': to}
         return render_to_response(request, self.TEMPLATE, data=data)
 
     def post(self, request):
         username = request.POST.get('username')
         password = request.POST.get('password')
+
+        to = request.GET.get('to', '')
 
         data = {}
 
@@ -39,6 +45,10 @@ class Login(View):
             return render_to_response(request, self.TEMPLATE, data=data)
 
         login(request, user)
+
+        if to:
+            return redirect(to)
+
         return redirect(reverse('dashboard_index'))
 
 
@@ -49,14 +59,15 @@ class Logout(View):
         return redirect(reverse('login'))
 
 
-class Admin(View):
+class AdminManger(View):
     TEMPLATE = 'dashboard/auth/admin.html'
 
+    @dashboard_auth
     def get(self, request):
         # users = User.objects.filter(is_superuser=True)
         users = User.objects.all()
         page = request.GET.get('page', 1)
-        p = Paginator(users, 2)
+        p = Paginator(users, 2)  # Paginator分页对象，设置每一页显示几条
         total_page = p.num_pages
 
         if int(page) <= 1:

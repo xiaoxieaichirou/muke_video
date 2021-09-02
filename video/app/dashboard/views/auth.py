@@ -4,6 +4,7 @@ from django.views.generic import View
 from django.shortcuts import redirect, reverse
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.models import User
+from django.core.paginator import Paginator
 from app.libs.base_render import render_to_response
 
 
@@ -54,8 +55,18 @@ class Admin(View):
     def get(self, request):
         # users = User.objects.filter(is_superuser=True)
         users = User.objects.all()
-        data = {'users': users}
+        page = request.GET.get('page', 1)
+        p = Paginator(users, 2)
+        total_page = p.num_pages
+
+        if int(page) <= 1:
+            page = 1
+
+        current_page = p.get_page(int(page)).object_list
+
+        data = {'users': current_page, 'total': total_page, 'page_num': int(page)}
         return render_to_response(request, self.TEMPLATE, data=data)
+
 
 class UpdateAdminStatus(View):
     def get(self, request):

@@ -1,7 +1,11 @@
 <%inherit file="../base.html" />
 <%! from django.shortcuts import reverse %>
-
 <%def name="content()">
+
+<%
+    prev_page = '{}?page={}'.format(reverse('admin_manger'), page_num - 1)
+    next_page = '{}?page={}'.format(reverse('admin_manger'), page_num + 1)
+%>
 <h1>
     管理员模块
 </h1>
@@ -21,13 +25,19 @@
         <td>${user.is_superuser}</td>
         <td>${user.date_joined}</td>
         % if user.is_superuser:
-        <td><a href="${reverse('admin_update_status')}?status=off">取消管理员</a></td>
+            <td><a href="${reverse('admin_update_status')}?status=off">取消管理员</a></td>
         % else:
-        <td><a href="${reverse('admin_update_status')}?status=on">成为管理员</a></td>
+            <td><a href="${reverse('admin_update_status')}?status=on">成为管理员</a></td>
         % endif
     </tr>
     % endfor
-
     </tbody>
 </table>
+% if page_num > 1:
+<a href="${prev_page}">上一页</a>
+% endif
+% if page_num < total:
+<a href="${next_page}">下一页</a>
+% endif
+
 </%def>

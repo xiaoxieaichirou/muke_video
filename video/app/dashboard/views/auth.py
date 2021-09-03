@@ -6,7 +6,7 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.models import User
 from django.core.paginator import Paginator
 from app.libs.base_render import render_to_response
-from app.utils.permission import  dashboard_auth
+from app.utils.permission import dashboard_auth
 
 
 class Login(View):

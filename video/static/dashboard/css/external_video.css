@@ -16,3 +16,14 @@
     border-radius: 8px;
     display: none;
 }
+
+.video-images {
+    width: 100px;
+}
+
+.info {
+    width: 100px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}

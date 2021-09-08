@@ -43,6 +43,16 @@ NationalityType.america.label = '美国'
 NationalityType.other.label = '其他'
 
 
+class IdentityType(Enum):
+    to_star = 'to_star'
+    supporting = 'supporting_rule'
+    director = 'director'
+
+
+IdentityType.to_star.label = '主演'
+IdentityType.supporting.label = '配角'
+IdentityType.director.label = '导演'
+
 class Video(models.Model):
     name = models.CharField(max_length=100, null=False)
     image = models.CharField(max_length=500, default='')

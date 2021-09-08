@@ -1,10 +1,20 @@
-input {
-    width: 50% !important;
+input select{
+    width: 50% !important;  /* !important 强行执行该样式 */
     display: inline-block !important;
 }
 
 .add-url {
-    width: 50%;
+    width: 20%;
     padding: 10px;
     border: 1px solid #cccccc;
+}
+
+#add-url-btn, #add-star-btn {
+    width: 60px !important;
+}
+
+.info {
+    width: 100px;
+    overflow: hidden;
+    white-space: nowrap;
 }

@@ -1,0 +1,16 @@
+<%inherit file="../base.html" />
+<%! from django.shortcuts import reverse %>
+<%def name="content()">
+
+<h1>${video.name}</h1>
+
+<form class="form-horizontal edit-area add-video-area add-url" >
+
+    <label>添加地址</label><input type="text" name="url" class="form-control"/>
+
+</form>
+</%def>
+
+<%def name="css()">
+    <link href="/static/dashboard/css/video_sub.css" rel="stylesheet" />
+</%def>

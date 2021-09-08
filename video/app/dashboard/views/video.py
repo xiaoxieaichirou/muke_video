@@ -50,3 +50,15 @@ class ExternalVideo(View):
                              from_to=from_to, info=info)
 
         return redirect(reverse('external_video'))
+
+
+class VideoSub(View):
+    TEMPLATE = 'dashboard/video/video_sub.html'
+
+    @dashboard_auth
+    def get(self, request, video_id):
+        data = {}
+        video = Video.objects.get(pk=video_id)
+
+        data['video'] = video
+        return render_to_response(request, self.TEMPLATE, data=data)

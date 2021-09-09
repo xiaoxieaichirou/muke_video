@@ -68,6 +68,7 @@ class VideoSubViews(View):
     def post(self, request, video_id):
         url = request.POST.get('url')
         number = request.POST.get('number')
+        videosub_id = request.POST.get('videosub_id')
 
         url_format = reverse('video_sub', kwargs={'video_id': video_id})
 
@@ -75,12 +76,19 @@ class VideoSubViews(View):
             return redirect('{}?error={}'.format(url_format, '缺少必要字段'))
 
         video = Video.objects.get(pk=video_id)
-
-        try:
-            VideoSub.objects.create(video=video, url=url, number=number)
-        except:
-            return redirect('{}?error={}'.format(url_format, '创建失败'))
-
+        if not videosub_id:
+            try:
+                VideoSub.objects.create(video=video, url=url, number=number)
+            except:
+                return redirect('{}?error={}'.format(url_format, '创建失败'))
+        else:
+            video_sub = VideoSub.objects.get(pk=videosub_id)
+            try:
+                video_sub.url = url
+                video_sub.number = number
+                video_sub.save()
+            except:
+                return redirect('{}?error={}'.format(url_format, '修改失败'))
         return redirect(reverse('video_sub'), kwargs={'video_id': video_id})
 
 
@@ -114,4 +122,11 @@ class VideoStarView(View):
 class StarDelete(View):
     def get(self, request, star_id, video_id):
         VideoStar.objects.filter(id=star_id).delete()
+        return redirect(reverse('video_sub', kwargs={'video_id': video_id}))
+
+
+class SubDelete(View):
+    def get(self, request, videosub_id, video_id):
+        VideoSub.objects.filter(id=videosub_id).delete()
+
         return redirect(reverse('video_sub', kwargs={'video_id': video_id}))

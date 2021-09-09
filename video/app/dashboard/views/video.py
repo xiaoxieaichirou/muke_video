@@ -67,15 +67,19 @@ class VideoSubViews(View):
 
     def post(self, request, video_id):
         url = request.POST.get('url')
+        number = request.POST.get('number')
+
+        url_format = reverse('video_sub', kwargs={'video_id': video_id})
+
+        if not all([url, number]):
+            return redirect('{}?error={}'.format(url_format, '缺少必要字段'))
+
         video = Video.objects.get(pk=video_id)
 
-        # path_format = '{}'.format(reverse('video_sub', kwargs={'video_id': video_id}))
-
-        length = video.video_sub.count()
-        # try:
-        VideoSub.objects.create(video=video, url=url, number=length + 1)
-        # except:
-        #     return redirect('{}?error={}'.format(path_format, '创建失败'))
+        try:
+            VideoSub.objects.create(video=video, url=url, number=number)
+        except:
+            return redirect('{}?error={}'.format(url_format, '创建失败'))
 
         return redirect(reverse('video_sub'), kwargs={'video_id': video_id})
 

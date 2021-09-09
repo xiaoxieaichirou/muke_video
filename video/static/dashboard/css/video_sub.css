@@ -7,6 +7,9 @@ input select{
     width: 20%;
     padding: 10px;
     border: 1px solid #cccccc;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-left: 20px;
 }
 
 #add-url-btn, #add-star-btn {
@@ -17,4 +20,12 @@ input select{
     width: 100px;
     overflow: hidden;
     white-space: nowrap;
+    text-overflow: ellipsis;
+    font-style: normal;
+    font-size: 16px;
+}
+
+p {
+    font-size: 20px;
+    font-style: bold;
 }

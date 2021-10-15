@@ -33,6 +33,7 @@ class NationalityType(Enum):
     japan = 'japan'
     korea = 'korea'
     america = 'america'
+    britain = 'britain'
     other = 'other'
 
 
@@ -40,6 +41,7 @@ NationalityType.china.label = '中国'
 NationalityType.japan.label = '日本'
 NationalityType.korea.label = '韩国'
 NationalityType.america.label = '美国'
+NationalityType.britain.label = '英国'
 NationalityType.other.label = '其他'
 
 
